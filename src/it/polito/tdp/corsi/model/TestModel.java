@@ -12,6 +12,10 @@ public class TestModel {
 		
 		for(Corso c: corsi)
 			System.out.println(c);
+		
+		System.out.println(m.getNomeCognomeFromMatricola(148072));
 	}
+	
+	
 
 }

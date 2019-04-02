@@ -30,6 +30,7 @@ public class CorsoDAO {
 			
 			PreparedStatement st = conn.prepareStatement(sql) ;
 			
+			
 			ResultSet res = st.executeQuery() ;
 			
 			while(res.next()) {
@@ -56,8 +57,34 @@ public class CorsoDAO {
 	 * @return
 	 */
 	public List<Corso> listByPD(int pd) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "SELECT codins, crediti, nome, pd FROM corso where pd=? " ;
+		
+		List<Corso> result = new ArrayList<>() ;
+		
+		try {
+			Connection conn = DriverManager.getConnection(jdbcURL) ;
+			
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			st.setInt(1, pd);
+			
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				Corso c = new Corso(res.getString("codins"),
+						res.getInt("crediti"),
+						res.getString("nome"),
+						res.getInt("pd") ) ;
+				
+				result.add(c) ;
+			}
+			
+			conn.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e) ;
+		}
+		
+		return result;
 	}
 
 }
